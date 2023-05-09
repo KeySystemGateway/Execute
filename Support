@@ -206,7 +206,9 @@ if Sender_LOADED and not _G.Sender_DEBUG == true then
 
 TextBox.Text = "You Can Only Send One Message."
 
-	returnend
+	return
+
+end
 
 pcall(function() getgenv().Sender_LOADED = true end)
 
