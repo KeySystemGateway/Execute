@@ -34,9 +34,11 @@ KeyGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 KeyFrame.Name = "KeyFrame"
 KeyFrame.Parent = KeyGui
+KeyFrame.Active = true
 KeyFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 KeyFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
 KeyFrame.BorderSizePixel = 0
+KeyFrame.Draggable = true
 KeyFrame.Position = UDim2.new(0.344164312, 0, 0.30216527, 0)
 KeyFrame.Size = UDim2.new(0, 200, 0, 210)
 KeyFrame.Image = "http://www.roblox.com/asset/?id=11926598891"
@@ -87,6 +89,7 @@ TextBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 TextBox.BackgroundTransparency = 1.000
 TextBox.BorderColor3 = Color3.fromRGB(0, 0, 0)
 TextBox.BorderSizePixel = 0
+TextBox.ClearTextOnFocus = false
 TextBox.Position = UDim2.new(0.027777778, 0, 0, 0)
 TextBox.Size = UDim2.new(0, 170, 0, 20)
 TextBox.Font = Enum.Font.Gotham
