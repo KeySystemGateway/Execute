@@ -1,3 +1,7 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/KeySystemGateway/Execute/refs/heads/VHub/SpiceDiamond"))()
+local KeyInfo = loadstring(game:HttpGet("https://raw.githubusercontent.com/KeySystemGateway/Execute/refs/heads/VHub/SpiceDiamond"))()
+local Message = loadstring(game:HttpGet("https://raw.githubusercontent.com/V31nc/On-Discord/Created/VexConsole"))()
+
 -- V31nc : GUI to LUA V1
 
 -- Instances:
@@ -209,3 +213,30 @@ Youtube.Size = UDim2.new(0, 20, 0, 20)
 Youtube.Image = "http://www.roblox.com/asset/?id=9184348931"
 
 UICorner_6.Parent = Youtube
+
+function Status(Message)
+  Status.Text = Message
+  wait(5)
+  Status.Text = "Do the key system to use VexHub"
+end
+
+Discord.MouseButton1Down:Connect(function()
+  setclipboard("dsc.gg/VHub")
+  Status("Discord link copied!")
+end)
+
+UnlockButton.MouseButton1Down:Connect(function()
+  local String = string.gsub(TextBox.ContentText, " ", "")
+
+  if SpiceDiamondEncode(String) == KeyInfo.K then
+  Status("Authorized! Welcome back user!")
+
+  writefile("."..KeyInfo.FileName..", string.reverse(KeyInfo.K))
+  wait(3)
+  KeyGui:Destroy()
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/Sofjskdkkco/GUIGateway/refs/heads/main/Source"))()
+
+  else
+  Status("Wrong key")
+  end
+end)
