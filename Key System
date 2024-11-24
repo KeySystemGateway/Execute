@@ -1,4 +1,4 @@
-loadstring(game:HttpGet("https://raw.githubusercontent.com/KeySystemGateway/Execute/refs/heads/VHub/Key%20System"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/KeySystemGateway/Execute/refs/heads/VHub/SpiceDiamond"))()
 local KeyInfo = loadstring(game:HttpGet("https://raw.githubusercontent.com/KeySystemGateway/Execute/refs/heads/VHub/KeyInfo"))()
 local Message = loadstring(game:HttpGet("https://raw.githubusercontent.com/V31nc/On-Discord/Created/VexConsole"))()
 
