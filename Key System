@@ -1,4 +1,5 @@
 loadstring(game:HttpGet("https://raw.githubusercontent.com/KeySystemGateway/Execute/refs/heads/VHub/SpiceDiamond"))()
+
 local KeyInfo = loadstring(game:HttpGet("https://raw.githubusercontent.com/KeySystemGateway/Execute/refs/heads/VHub/KeyInfo"))()
 local Message = loadstring(game:HttpGet("https://raw.githubusercontent.com/V31nc/On-Discord/Created/VexConsole"))()
 
@@ -229,14 +230,14 @@ UnlockButton.MouseButton1Down:Connect(function()
   local String = string.gsub(TextBox.ContentText, " ", "")
 
   if SpiceDiamondEncode(String) == KeyInfo.K then
-  Status("Authorized! Welcome back user!")
-
-  writefile("."..KeyInfo.FileName..", string.reverse(KeyInfo.K))
-  wait(3)
-  KeyGui:Destroy()
-  loadstring(game:HttpGet("https://raw.githubusercontent.com/Sofjskdkkco/GUIGateway/refs/heads/main/Source"))()
+    Status("Authorized! Welcome back user!")
+  
+    writefile("."..KeyInfo.FileName..", string.reverse(KeyInfo.K))
+    wait(3)
+    KeyGui:Destroy()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Sofjskdkkco/GUIGateway/refs/heads/main/Source"))()
 
   else
-  Status("Wrong key")
+    Status("Wrong key")
   end
 end)
