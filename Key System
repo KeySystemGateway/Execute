@@ -215,9 +215,11 @@ Youtube.Image = "http://www.roblox.com/asset/?id=9184348931"
 UICorner_6.Parent = Youtube
 
 function StatusMessage(String)
-  Status.Text = String
-  wait(5)
-  Status.Text = "Do the key system to use VexHub"
+  coroutine.wrap(function()
+    Status.Text = String
+    wait(5)
+    Status.Text = "Do the key system to use VexHub"
+  end)()
 end
 
 Discord.MouseButton1Down:Connect(function()
@@ -229,8 +231,7 @@ UnlockButton.MouseButton1Down:Connect(function()
   local String = string.gsub(TextBox.ContentText, " ", "")
 
   if SpiceDiamondEncode(String) == KeyInfo.K then
-    StatusMessage("Authorized! Welcome back user!")
-  
+    StatusMessage("Authorized! Saving credentials...")
     writefile("."..KeyInfo.FileName, string.reverse(KeyInfo.K))
     wait(3)
     KeyGui:Destroy()
