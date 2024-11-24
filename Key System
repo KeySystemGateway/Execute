@@ -224,3 +224,19 @@ Discord.MouseButton1Down:Connect(function()
   setclipboard("dsc.gg/VHub")
   StatusMessage("Discord link copied!")
 end)
+
+UnlockButton.MouseButton1Down:Connect(function()
+  local String = string.gsub(TextBox.ContentText, " ", "")
+
+  if SpiceDiamondEncode(String) == KeyInfo.K then
+    StatusMessage("Authorized! Welcome back user!")
+  
+    writefile("."..KeyInfo.FileName..", string.reverse(KeyInfo.K))
+    wait(3)
+    KeyGui:Destroy()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Sofjskdkkco/GUIGateway/refs/heads/main/Source"))()
+
+  else
+    StatusMessage("Wrong key")
+  end
+end)
