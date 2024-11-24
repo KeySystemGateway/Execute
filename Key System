@@ -231,7 +231,7 @@ UnlockButton.MouseButton1Down:Connect(function()
   if SpiceDiamondEncode(String) == KeyInfo.K then
     StatusMessage("Authorized! Welcome back user!")
   
-    writefile("."..KeyInfo.FileName..", string.reverse(KeyInfo.K))
+    writefile("."..KeyInfo.FileName, string.reverse(KeyInfo.K))
     wait(3)
     KeyGui:Destroy()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Sofjskdkkco/GUIGateway/refs/heads/main/Source"))()
