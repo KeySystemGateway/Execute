@@ -3,7 +3,7 @@ local KeyInfo = loadstring(game:HttpGet("https://raw.githubusercontent.com/KeySy
 local Message = loadstring(game:HttpGet("https://raw.githubusercontent.com/V31nc/On-Discord/Created/VexConsole"))()
 
 if isfile(KeyInfo.FileName) then
-  if string.reverse(readfile(KeyInfo.FileName)) == KeyInfo.K then
+  if string.reverse(readfile("."..KeyInfo.FileName)) == KeyInfo.K then
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Sofjskdkkco/GUIGateway/refs/heads/main/Source"))()
   else
     delfile(KeyInfo.FileName)
