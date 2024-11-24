@@ -1,3 +1,4 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/KeySystemGateway/Execute/refs/heads/VHub/Key%20System"))()
 local KeyInfo = loadstring(game:HttpGet("https://raw.githubusercontent.com/KeySystemGateway/Execute/refs/heads/VHub/KeyInfo"))()
 local Message = loadstring(game:HttpGet("https://raw.githubusercontent.com/V31nc/On-Discord/Created/VexConsole"))()
 
@@ -213,13 +214,13 @@ Youtube.Image = "http://www.roblox.com/asset/?id=9184348931"
 
 UICorner_6.Parent = Youtube
 
-function Status(Message)
-  Status.Text = Message
+function StatusMessage(String)
+  Status.Text = String
   wait(5)
   Status.Text = "Do the key system to use VexHub"
 end
 
 Discord.MouseButton1Down:Connect(function()
   setclipboard("dsc.gg/VHub")
-  Status("Discord link copied!")
+  StatusMessage("Discord link copied!")
 end)
