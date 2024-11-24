@@ -6,7 +6,7 @@ if isfile(KeyInfo.FileName) then
   if string.reverse(readfile("."..KeyInfo.FileName)) == KeyInfo.K then
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Sofjskdkkco/GUIGateway/refs/heads/main/Source"))()
   else
-    delfile(KeyInfo.FileName)
+    delfile("."..KeyInfo.FileName)
     wait()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/KeySystemGateway/Execute/refs/heads/VHub/Key%20System"))()
   end
