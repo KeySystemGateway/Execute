@@ -526,6 +526,14 @@ function StartKeySystemSession()
       print("key is invalid.")
     end
   end)
+
+  GetKey.MouseButton1Down:Connect(function()
+    copyLink()
+  end)
+
+  Discord.MouseButton1Down:Connect(function()
+    setclipboard("dsc.gg/vhub")
+  end)
 end
 
 if isfile(".vxhbsys") then
