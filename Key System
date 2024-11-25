@@ -538,7 +538,7 @@ function StartKeySystemSession()
   end)
 end
 
-if isfile(".vxhbsys") then
+if isfile(".vxhbksys") then
   local String = readfile(".vxhbksys")
   local success = verifyKey(String)
     
