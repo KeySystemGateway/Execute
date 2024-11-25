@@ -543,8 +543,6 @@ if isfile(".vxhbksys") then
   local success = verifyKey(String)
     
   if success then
-    writefile(".vxhbksys", TextBox.ContentText)
-    KeyGui:Destroy()
     StartVexHubSession()
   else
     StartKeySystemSession()
