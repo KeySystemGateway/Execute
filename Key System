@@ -18,6 +18,7 @@ local useNonce = true;  -- use a nonce to prevent replay attacks and request tam
 
 --! callbacks
 local onMessage = function(message) 
+  print(message)
   if game:GetService("CoreGui"):FindFirstChild("KeyGui") then
     game:GetService("CoreGui").KeyGui.KeyFrame.Status.Text = message
     wait(5)
@@ -281,240 +282,263 @@ end
 -- use verifyKey(key) to verify a key, this will return a boolean value, true means the key was valid, false means it is invalid.
 -- use getFlag(name) to get a flag from the server, this will return nil if an error occurs, if no error occurs, the value configured in the platoboost dashboard will be returned.
 
--- V31nc : GUI to LUA V1
+function StartVexHubSession()
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/Sofjskdkkco/GUIGateway/refs/heads/main/Source"))()
+end
 
--- Instances:
-
-local KeyGui = Instance.new("ScreenGui")
-local KeyFrame = Instance.new("ImageLabel")
-local UICorner = Instance.new("UICorner")
-local VexHubImage = Instance.new("ImageLabel")
-local KeySystemText = Instance.new("TextLabel")
-local TextBoxParent = Instance.new("Frame")
-local TextBox = Instance.new("TextBox")
-local UICorner_2 = Instance.new("UICorner")
-local UIStroke = Instance.new("UIStroke")
-local Status = Instance.new("TextLabel")
-local UIListLayout = Instance.new("UIListLayout")
-local GetKey = Instance.new("TextButton")
-local UICorner_3 = Instance.new("UICorner")
-local UIListLayout_2 = Instance.new("UIListLayout")
-local KeyImage = Instance.new("ImageLabel")
-local TextLabel = Instance.new("TextLabel")
-local Discord = Instance.new("TextButton")
-local UICorner_4 = Instance.new("UICorner")
-local UIListLayout_3 = Instance.new("UIListLayout")
-local DiscordLogo = Instance.new("ImageLabel")
-local TextLabel_2 = Instance.new("TextLabel")
-local Unlock = Instance.new("TextButton")
-local UICorner_5 = Instance.new("UICorner")
-
---Properties:
-
-KeyGui.Name = "KeyGui"
-KeyGui.Parent = game:GetService("CoreGui")
-KeyGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-
-KeyFrame.Name = "KeyFrame"
-KeyFrame.Parent = KeyGui
-KeyFrame.Active = true
-KeyFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-KeyFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-KeyFrame.BorderSizePixel = 0
-KeyFrame.Draggable = true
-KeyFrame.Position = UDim2.new(0.344164312, 0, 0.30216527, 0)
-KeyFrame.Size = UDim2.new(0, 200, 0, 230)
-KeyFrame.Image = "http://www.roblox.com/asset/?id=11926598891"
-KeyFrame.ImageTransparency = 0.500
-KeyFrame.ScaleType = Enum.ScaleType.Crop
-
-UICorner.Parent = KeyFrame
-
-VexHubImage.Name = "VexHubImage"
-VexHubImage.Parent = KeyFrame
-VexHubImage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-VexHubImage.BackgroundTransparency = 1.000
-VexHubImage.BorderColor3 = Color3.fromRGB(0, 0, 0)
-VexHubImage.BorderSizePixel = 0
-VexHubImage.LayoutOrder = 1
-VexHubImage.Position = UDim2.new(0.25, 0, 0.434782594, 0)
-VexHubImage.Size = UDim2.new(0, 100, 0, 54)
-VexHubImage.Image = "rbxassetid://14803348752"
-VexHubImage.ScaleType = Enum.ScaleType.Crop
-
-KeySystemText.Name = "KeySystemText"
-KeySystemText.Parent = KeyFrame
-KeySystemText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-KeySystemText.BackgroundTransparency = 1.000
-KeySystemText.BorderColor3 = Color3.fromRGB(0, 0, 0)
-KeySystemText.BorderSizePixel = 0
-KeySystemText.LayoutOrder = 2
-KeySystemText.Position = UDim2.new(0, 0, 0.70869565, 0)
-KeySystemText.Size = UDim2.new(0, 200, 0, 23)
-KeySystemText.Font = Enum.Font.GothamBold
-KeySystemText.Text = "Key System"
-KeySystemText.TextColor3 = Color3.fromRGB(255, 255, 255)
-KeySystemText.TextSize = 18.000
-KeySystemText.TextYAlignment = Enum.TextYAlignment.Top
-
-TextBoxParent.Name = "TextBoxParent"
-TextBoxParent.Parent = KeyFrame
-TextBoxParent.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-TextBoxParent.BackgroundTransparency = 0.900
-TextBoxParent.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TextBoxParent.BorderSizePixel = 0
-TextBoxParent.LayoutOrder = 3
-TextBoxParent.Position = UDim2.new(0.0500000007, 0, 0.456521749, 0)
-TextBoxParent.Size = UDim2.new(0, 180, 0, 20)
-
-TextBox.Parent = TextBoxParent
-TextBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-TextBox.BackgroundTransparency = 1.000
-TextBox.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TextBox.BorderSizePixel = 0
-TextBox.Position = UDim2.new(0.027777778, 0, 0, 0)
-TextBox.Size = UDim2.new(0, 170, 0, 20)
-TextBox.ClearTextOnFocus = false
-TextBox.Font = Enum.Font.Gotham
-TextBox.PlaceholderText = "Key Here"
-TextBox.Text = ""
-TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
-TextBox.TextSize = 12.000
-TextBox.TextWrapped = true
-TextBox.TextXAlignment = Enum.TextXAlignment.Left
-
-UICorner_2.Parent = TextBoxParent
-
-UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-UIStroke.Color = Color3.fromRGB(255, 255, 255)
-UIStroke.Thickness = 0.500
-UIStroke.Transparency = 0.700
-UIStroke.Parent = TextBoxParent
-
-Status.Name = "Status"
-Status.Parent = KeyFrame
-Status.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Status.BackgroundTransparency = 1.000
-Status.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Status.BorderSizePixel = 0
-Status.LayoutOrder = 4
-Status.Position = UDim2.new(0, 0, 0.541545987, 0)
-Status.Size = UDim2.new(0, 200, 0, 10)
-Status.Font = Enum.Font.Gotham
-Status.Text = "Do the key system to use VexHub"
-Status.TextColor3 = Color3.fromRGB(255, 255, 255)
-Status.TextSize = 10.000
-
-UIListLayout.Parent = KeyFrame
-UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
-UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
-UIListLayout.VerticalAlignment = Enum.VerticalAlignment.Center
-UIListLayout.Padding = UDim.new(0, 5)
-
-GetKey.Name = "GetKey"
-GetKey.Parent = KeyFrame
-GetKey.BackgroundColor3 = Color3.fromRGB(255, 170, 0)
-GetKey.BorderColor3 = Color3.fromRGB(0, 0, 0)
-GetKey.BorderSizePixel = 0
-GetKey.LayoutOrder = 6
-GetKey.Position = UDim2.new(0.0500000007, 0, 0.730391264, 0)
-GetKey.Size = UDim2.new(0, 180, 0, 20)
-GetKey.Font = Enum.Font.GothamBold
-GetKey.Text = ""
-GetKey.TextColor3 = Color3.fromRGB(255, 255, 255)
-GetKey.TextSize = 14.000
-
-UICorner_3.Parent = GetKey
-
-UIListLayout_2.Parent = GetKey
-UIListLayout_2.FillDirection = Enum.FillDirection.Horizontal
-UIListLayout_2.HorizontalAlignment = Enum.HorizontalAlignment.Center
-UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
-UIListLayout_2.VerticalAlignment = Enum.VerticalAlignment.Center
-
-KeyImage.Name = "KeyImage"
-KeyImage.Parent = GetKey
-KeyImage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-KeyImage.BackgroundTransparency = 1.000
-KeyImage.BorderColor3 = Color3.fromRGB(0, 0, 0)
-KeyImage.BorderSizePixel = 0
-KeyImage.Size = UDim2.new(0, 20, 0, 20)
-KeyImage.Image = "rbxassetid://11947931309"
-
-TextLabel.Parent = GetKey
-TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-TextLabel.BackgroundTransparency = 1.000
-TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TextLabel.BorderSizePixel = 0
-TextLabel.Size = UDim2.new(0, 0, 0, 20)
-TextLabel.Font = Enum.Font.GothamBold
-TextLabel.Text = " Get Key"
-TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-TextLabel.TextSize = 14.000
-
-Discord.Name = "Discord"
-Discord.Parent = KeyFrame
-Discord.BackgroundColor3 = Color3.fromRGB(87, 101, 242)
-Discord.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Discord.BorderSizePixel = 0
-Discord.LayoutOrder = 7
-Discord.Position = UDim2.new(0.0500000007, 0, 0.730391264, 0)
-Discord.Size = UDim2.new(0, 180, 0, 20)
-Discord.Font = Enum.Font.GothamBold
-Discord.Text = ""
-Discord.TextColor3 = Color3.fromRGB(255, 255, 255)
-Discord.TextSize = 14.000
-
-UICorner_4.Parent = Discord
-
-UIListLayout_3.Parent = Discord
-UIListLayout_3.FillDirection = Enum.FillDirection.Horizontal
-UIListLayout_3.HorizontalAlignment = Enum.HorizontalAlignment.Center
-UIListLayout_3.SortOrder = Enum.SortOrder.LayoutOrder
-UIListLayout_3.VerticalAlignment = Enum.VerticalAlignment.Center
-
-DiscordLogo.Name = "DiscordLogo"
-DiscordLogo.Parent = Discord
-DiscordLogo.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-DiscordLogo.BackgroundTransparency = 1.000
-DiscordLogo.BorderColor3 = Color3.fromRGB(0, 0, 0)
-DiscordLogo.BorderSizePixel = 0
-DiscordLogo.Size = UDim2.new(0, 20, 0, 20)
-DiscordLogo.Image = "rbxassetid://10735070439"
-
-TextLabel_2.Parent = Discord
-TextLabel_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-TextLabel_2.BackgroundTransparency = 1.000
-TextLabel_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TextLabel_2.BorderSizePixel = 0
-TextLabel_2.Size = UDim2.new(0, 0, 0, 20)
-TextLabel_2.Font = Enum.Font.GothamBold
-TextLabel_2.Text = " Discord"
-TextLabel_2.TextColor3 = Color3.fromRGB(255, 255, 255)
-TextLabel_2.TextSize = 14.000
-
-Unlock.Name = "Unlock"
-Unlock.Parent = KeyFrame
-Unlock.BackgroundColor3 = Color3.fromRGB(0, 186, 85)
-Unlock.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Unlock.BorderSizePixel = 0
-Unlock.LayoutOrder = 5
-Unlock.Position = UDim2.new(0.0500000007, 0, 0.730391264, 0)
-Unlock.Size = UDim2.new(0, 180, 0, 25)
-Unlock.Font = Enum.Font.GothamBold
-Unlock.Text = "Unlock"
-Unlock.TextColor3 = Color3.fromRGB(255, 255, 255)
-Unlock.TextSize = 16.000
-
-UICorner_5.Parent = Unlock
-
-Unlock.MouseButton1Down:Connect(function()
-  local String = TextBox.ContentText
-  local success = verifyKey(String)
+function StartKeySystemSession()
+  -- V31nc : GUI to LUA V1
   
+  -- Instances:
+  
+  local KeyGui = Instance.new("ScreenGui")
+  local KeyFrame = Instance.new("ImageLabel")
+  local UICorner = Instance.new("UICorner")
+  local VexHubImage = Instance.new("ImageLabel")
+  local KeySystemText = Instance.new("TextLabel")
+  local TextBoxParent = Instance.new("Frame")
+  local TextBox = Instance.new("TextBox")
+  local UICorner_2 = Instance.new("UICorner")
+  local UIStroke = Instance.new("UIStroke")
+  local Status = Instance.new("TextLabel")
+  local UIListLayout = Instance.new("UIListLayout")
+  local GetKey = Instance.new("TextButton")
+  local UICorner_3 = Instance.new("UICorner")
+  local UIListLayout_2 = Instance.new("UIListLayout")
+  local KeyImage = Instance.new("ImageLabel")
+  local TextLabel = Instance.new("TextLabel")
+  local Discord = Instance.new("TextButton")
+  local UICorner_4 = Instance.new("UICorner")
+  local UIListLayout_3 = Instance.new("UIListLayout")
+  local DiscordLogo = Instance.new("ImageLabel")
+  local TextLabel_2 = Instance.new("TextLabel")
+  local Unlock = Instance.new("TextButton")
+  local UICorner_5 = Instance.new("UICorner")
+  
+  --Properties:
+  
+  KeyGui.Name = "KeyGui"
+  KeyGui.Parent = game:GetService("CoreGui")
+  KeyGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+  
+  KeyFrame.Name = "KeyFrame"
+  KeyFrame.Parent = KeyGui
+  KeyFrame.Active = true
+  KeyFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+  KeyFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+  KeyFrame.BorderSizePixel = 0
+  KeyFrame.Draggable = true
+  KeyFrame.Position = UDim2.new(0.344164312, 0, 0.30216527, 0)
+  KeyFrame.Size = UDim2.new(0, 200, 0, 230)
+  KeyFrame.Image = "http://www.roblox.com/asset/?id=11926598891"
+  KeyFrame.ImageTransparency = 0.500
+  KeyFrame.ScaleType = Enum.ScaleType.Crop
+  
+  UICorner.Parent = KeyFrame
+  
+  VexHubImage.Name = "VexHubImage"
+  VexHubImage.Parent = KeyFrame
+  VexHubImage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+  VexHubImage.BackgroundTransparency = 1.000
+  VexHubImage.BorderColor3 = Color3.fromRGB(0, 0, 0)
+  VexHubImage.BorderSizePixel = 0
+  VexHubImage.LayoutOrder = 1
+  VexHubImage.Position = UDim2.new(0.25, 0, 0.434782594, 0)
+  VexHubImage.Size = UDim2.new(0, 100, 0, 54)
+  VexHubImage.Image = "rbxassetid://14803348752"
+  VexHubImage.ScaleType = Enum.ScaleType.Crop
+  
+  KeySystemText.Name = "KeySystemText"
+  KeySystemText.Parent = KeyFrame
+  KeySystemText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+  KeySystemText.BackgroundTransparency = 1.000
+  KeySystemText.BorderColor3 = Color3.fromRGB(0, 0, 0)
+  KeySystemText.BorderSizePixel = 0
+  KeySystemText.LayoutOrder = 2
+  KeySystemText.Position = UDim2.new(0, 0, 0.70869565, 0)
+  KeySystemText.Size = UDim2.new(0, 200, 0, 23)
+  KeySystemText.Font = Enum.Font.GothamBold
+  KeySystemText.Text = "Key System"
+  KeySystemText.TextColor3 = Color3.fromRGB(255, 255, 255)
+  KeySystemText.TextSize = 18.000
+  KeySystemText.TextYAlignment = Enum.TextYAlignment.Top
+  
+  TextBoxParent.Name = "TextBoxParent"
+  TextBoxParent.Parent = KeyFrame
+  TextBoxParent.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+  TextBoxParent.BackgroundTransparency = 0.900
+  TextBoxParent.BorderColor3 = Color3.fromRGB(0, 0, 0)
+  TextBoxParent.BorderSizePixel = 0
+  TextBoxParent.LayoutOrder = 3
+  TextBoxParent.Position = UDim2.new(0.0500000007, 0, 0.456521749, 0)
+  TextBoxParent.Size = UDim2.new(0, 180, 0, 20)
+  
+  TextBox.Parent = TextBoxParent
+  TextBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+  TextBox.BackgroundTransparency = 1.000
+  TextBox.BorderColor3 = Color3.fromRGB(0, 0, 0)
+  TextBox.BorderSizePixel = 0
+  TextBox.Position = UDim2.new(0.027777778, 0, 0, 0)
+  TextBox.Size = UDim2.new(0, 170, 0, 20)
+  TextBox.ClearTextOnFocus = false
+  TextBox.Font = Enum.Font.Gotham
+  TextBox.PlaceholderText = "Key Here"
+  TextBox.Text = ""
+  TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+  TextBox.TextSize = 12.000
+  TextBox.TextWrapped = true
+  TextBox.TextXAlignment = Enum.TextXAlignment.Left
+  
+  UICorner_2.Parent = TextBoxParent
+  
+  UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+  UIStroke.Color = Color3.fromRGB(255, 255, 255)
+  UIStroke.Thickness = 0.500
+  UIStroke.Transparency = 0.700
+  UIStroke.Parent = TextBoxParent
+  
+  Status.Name = "Status"
+  Status.Parent = KeyFrame
+  Status.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+  Status.BackgroundTransparency = 1.000
+  Status.BorderColor3 = Color3.fromRGB(0, 0, 0)
+  Status.BorderSizePixel = 0
+  Status.LayoutOrder = 4
+  Status.Position = UDim2.new(0, 0, 0.541545987, 0)
+  Status.Size = UDim2.new(0, 200, 0, 10)
+  Status.Font = Enum.Font.Gotham
+  Status.Text = "Do the key system to use VexHub"
+  Status.TextColor3 = Color3.fromRGB(255, 255, 255)
+  Status.TextSize = 10.000
+  
+  UIListLayout.Parent = KeyFrame
+  UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+  UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+  UIListLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+  UIListLayout.Padding = UDim.new(0, 5)
+  
+  GetKey.Name = "GetKey"
+  GetKey.Parent = KeyFrame
+  GetKey.BackgroundColor3 = Color3.fromRGB(255, 170, 0)
+  GetKey.BorderColor3 = Color3.fromRGB(0, 0, 0)
+  GetKey.BorderSizePixel = 0
+  GetKey.LayoutOrder = 6
+  GetKey.Position = UDim2.new(0.0500000007, 0, 0.730391264, 0)
+  GetKey.Size = UDim2.new(0, 180, 0, 20)
+  GetKey.Font = Enum.Font.GothamBold
+  GetKey.Text = ""
+  GetKey.TextColor3 = Color3.fromRGB(255, 255, 255)
+  GetKey.TextSize = 14.000
+  
+  UICorner_3.Parent = GetKey
+  
+  UIListLayout_2.Parent = GetKey
+  UIListLayout_2.FillDirection = Enum.FillDirection.Horizontal
+  UIListLayout_2.HorizontalAlignment = Enum.HorizontalAlignment.Center
+  UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
+  UIListLayout_2.VerticalAlignment = Enum.VerticalAlignment.Center
+  
+  KeyImage.Name = "KeyImage"
+  KeyImage.Parent = GetKey
+  KeyImage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+  KeyImage.BackgroundTransparency = 1.000
+  KeyImage.BorderColor3 = Color3.fromRGB(0, 0, 0)
+  KeyImage.BorderSizePixel = 0
+  KeyImage.Size = UDim2.new(0, 20, 0, 20)
+  KeyImage.Image = "rbxassetid://11947931309"
+  
+  TextLabel.Parent = GetKey
+  TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+  TextLabel.BackgroundTransparency = 1.000
+  TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+  TextLabel.BorderSizePixel = 0
+  TextLabel.Size = UDim2.new(0, 0, 0, 20)
+  TextLabel.Font = Enum.Font.GothamBold
+  TextLabel.Text = " Get Key"
+  TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+  TextLabel.TextSize = 14.000
+  
+  Discord.Name = "Discord"
+  Discord.Parent = KeyFrame
+  Discord.BackgroundColor3 = Color3.fromRGB(87, 101, 242)
+  Discord.BorderColor3 = Color3.fromRGB(0, 0, 0)
+  Discord.BorderSizePixel = 0
+  Discord.LayoutOrder = 7
+  Discord.Position = UDim2.new(0.0500000007, 0, 0.730391264, 0)
+  Discord.Size = UDim2.new(0, 180, 0, 20)
+  Discord.Font = Enum.Font.GothamBold
+  Discord.Text = ""
+  Discord.TextColor3 = Color3.fromRGB(255, 255, 255)
+  Discord.TextSize = 14.000
+  
+  UICorner_4.Parent = Discord
+  
+  UIListLayout_3.Parent = Discord
+  UIListLayout_3.FillDirection = Enum.FillDirection.Horizontal
+  UIListLayout_3.HorizontalAlignment = Enum.HorizontalAlignment.Center
+  UIListLayout_3.SortOrder = Enum.SortOrder.LayoutOrder
+  UIListLayout_3.VerticalAlignment = Enum.VerticalAlignment.Center
+  
+  DiscordLogo.Name = "DiscordLogo"
+  DiscordLogo.Parent = Discord
+  DiscordLogo.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+  DiscordLogo.BackgroundTransparency = 1.000
+  DiscordLogo.BorderColor3 = Color3.fromRGB(0, 0, 0)
+  DiscordLogo.BorderSizePixel = 0
+  DiscordLogo.Size = UDim2.new(0, 20, 0, 20)
+  DiscordLogo.Image = "rbxassetid://10735070439"
+  
+  TextLabel_2.Parent = Discord
+  TextLabel_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+  TextLabel_2.BackgroundTransparency = 1.000
+  TextLabel_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+  TextLabel_2.BorderSizePixel = 0
+  TextLabel_2.Size = UDim2.new(0, 0, 0, 20)
+  TextLabel_2.Font = Enum.Font.GothamBold
+  TextLabel_2.Text = " Discord"
+  TextLabel_2.TextColor3 = Color3.fromRGB(255, 255, 255)
+  TextLabel_2.TextSize = 14.000
+  
+  Unlock.Name = "Unlock"
+  Unlock.Parent = KeyFrame
+  Unlock.BackgroundColor3 = Color3.fromRGB(0, 186, 85)
+  Unlock.BorderColor3 = Color3.fromRGB(0, 0, 0)
+  Unlock.BorderSizePixel = 0
+  Unlock.LayoutOrder = 5
+  Unlock.Position = UDim2.new(0.0500000007, 0, 0.730391264, 0)
+  Unlock.Size = UDim2.new(0, 180, 0, 25)
+  Unlock.Font = Enum.Font.GothamBold
+  Unlock.Text = "Unlock"
+  Unlock.TextColor3 = Color3.fromRGB(255, 255, 255)
+  Unlock.TextSize = 16.000
+  
+  UICorner_5.Parent = Unlock
+  
+  Unlock.MouseButton1Down:Connect(function()
+    local String = TextBox.ContentText
+    local success = verifyKey(String)
+    
+    if success then
+      writefile(".vxhbksys", TextBox.ContentText)
+      KeyGui:Destroy()
+      StartVexHubSession()
+    else
+      print("key is invalid.")
+    end
+  end)
+end
+
+if isfile(".vxhbsys") then
+  local String = readfile(".vxhbksys")
+  local success = verifyKey(String)
+    
   if success then
-    print("key is valid.")
+    writefile(".vxhbksys", TextBox.ContentText)
+    KeyGui:Destroy()
+    StartVexHubSession()
   else
-    print("key is invalid.")
+    StartKeySystemSession()
   end
-end)
+else
+  StartKeySystemSession()
+end
