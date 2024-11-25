@@ -448,7 +448,7 @@ function StartKeySystemSession()
   KeyImage.Image = "rbxassetid://11947931309"
   
   TextLabel.Parent = GetKey
-  TextLabel.AutomaticSize = Enum.AutomaticSize.Y
+  TextLabel.AutomaticSize = Enum.AutomaticSize.X
   TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
   TextLabel.BackgroundTransparency = 1.000
   TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -490,7 +490,7 @@ function StartKeySystemSession()
   DiscordLogo.Image = "rbxassetid://10735070439"
   
   TextLabel_2.Parent = Discord
-  TextLabel_2.AutomaticSize = Enum.AutomaticSize.Y
+  TextLabel_2.AutomaticSize = Enum.AutomaticSize.X
   TextLabel_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
   TextLabel_2.BackgroundTransparency = 1.000
   TextLabel_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
