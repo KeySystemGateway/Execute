@@ -4,6 +4,7 @@ local TweenService = game:GetService("TweenService")
 
 local ScreenGui = Instance.new("ScreenGui")
 local Loading = Instance.new("Frame")
+local LoadingImageParent = Instance.new("Frame")
 local UIListLayout = Instance.new("UIListLayout")
 local LoadingImage = Instance.new("ImageLabel")
 
@@ -25,9 +26,17 @@ UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 UIListLayout.VerticalAlignment = Enum.VerticalAlignment.Center
 UIListLayout.Padding = UDim.new(0, -13)
-	
+
+LoadingImageParent.Name = "LoadingImageParent"
+LoadingImageParent.Parent = Loading
+LoadingImageParent.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+LoadingImageParent.BackgroundTransparency = 1.000
+LoadingImageParent.BorderColor3 = Color3.fromRGB(0, 0, 0)
+LoadingImageParent.BorderSizePixel = 0
+LoadingImageParent.Size = UDim2.new(0, 100, 0, 100)
+
 LoadingImage.Name = "LoadingImage"
-LoadingImage.Parent = Loading
+LoadingImage.Parent = LoadingImageParent
 LoadingImage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 LoadingImage.BackgroundTransparency = 1.000
 LoadingImage.BorderColor3 = Color3.fromRGB(0, 0, 0)
