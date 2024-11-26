@@ -612,8 +612,8 @@ if isfile(".vxhbksys") then
 	local success = verifyKey(String)
 
 	if success then
-		DisappearLoading()
 		StartVexHubSession()
+		DisappearLoading()
 	else
 		if game:GetService("CoreGui"):FindFirstChild("KeyGui") == nil then
 			StartKeySystemSession()
