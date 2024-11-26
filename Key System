@@ -59,6 +59,7 @@ end)()
 function AppearLoading()
 	TweenService:Create(Loading, TweenInfo.new(0.5, Enum.EasingStyle.Quart), {BackgroundTransparency = 0.7}):Play()
 	TweenService:Create(LoadingImage, TweenInfo.new(0.5, Enum.EasingStyle.Quart), {ImageTransparency = 0}):Play()
+	wait(0.5)
 end
 
 function DisappearLoading()
