@@ -26,7 +26,7 @@ UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 UIListLayout.VerticalAlignment = Enum.VerticalAlignment.Center
 UIListLayout.Padding = UDim.new(0, -13)
 	
-LoadingImage.Name = "Logo"
+LoadingImage.Name = "LoadingImage"
 LoadingImage.Parent = Loading
 LoadingImage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 LoadingImage.BackgroundTransparency = 1.000
@@ -39,7 +39,7 @@ LoadingImage.ImageTransparency = 1.000
 
 coroutine.wrap(function()
 	while task.wait(0.03) do
-		LoadingImage.Rotation -= 1
+		LoadingImage.Rotation = -1
 	end
 end)()
 
