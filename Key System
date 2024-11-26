@@ -615,14 +615,14 @@ if isfile(".vxhbksys") then
 		DisappearLoading()
 		StartVexHubSession()
 	else
-		DisappearLoading()
 		if game:GetService("CoreGui"):FindFirstChild("KeyGui") == nil then
 			StartKeySystemSession()
 		end
+		DisappearLoading()
 	end
 else
-	DisappearLoading()
 	if game:GetService("CoreGui"):FindFirstChild("KeyGui") == nil then
 		StartKeySystemSession()
 	end
+	DisappearLoading()
 end
