@@ -47,8 +47,8 @@ LoadingImage.Visible = true
 LoadingImage.ImageTransparency = 1.000
 
 coroutine.wrap(function()
-	while task.wait(0.01) do
-		LoadingImage.Rotation -= 1
+	while task.wait(0.001) do
+		LoadingImage.Rotation += 1
 	end
 end)()
 
