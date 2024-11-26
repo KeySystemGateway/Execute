@@ -33,7 +33,7 @@ LoadingImageParent.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 LoadingImageParent.BackgroundTransparency = 1.000
 LoadingImageParent.BorderColor3 = Color3.fromRGB(0, 0, 0)
 LoadingImageParent.BorderSizePixel = 0
-LoadingImageParent.Size = UDim2.new(0, 100, 0, 100)
+LoadingImageParent.Size = UDim2.new(0, 50, 0, 50)
 
 LoadingImage.Name = "LoadingImage"
 LoadingImage.Parent = LoadingImageParent
@@ -42,7 +42,7 @@ LoadingImage.BackgroundTransparency = 1.000
 LoadingImage.BorderColor3 = Color3.fromRGB(0, 0, 0)
 LoadingImage.BorderSizePixel = 0
 LoadingImage.Image = "rbxassetid://139931642156739"
-LoadingImage.Size = UDim2.new(0, 100, 0, 100)
+LoadingImage.Size = UDim2.new(1, 0, 1, 0)
 LoadingImage.Visible = true
 LoadingImage.ImageTransparency = 1.000
 
