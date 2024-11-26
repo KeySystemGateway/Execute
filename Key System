@@ -11,7 +11,7 @@ local LoadingImage = Instance.new("ImageLabel")
 ScreenGui.Parent = game:GetService("CoreGui")
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 ScreenGui.IgnoreGuiInset = true
-	
+
 Loading.Name = "Loading"
 Loading.Parent = ScreenGui
 Loading.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
@@ -57,8 +57,8 @@ coroutine.wrap(function()
 end)()
 
 function AppearLoading()
-  TweenService:Create(Loading, TweenInfo.new(0.5, Enum.EasingStyle.Quart), {BackgroundTransparency = 0.7}):Play()
-  TweenService:Create(LoadingImage, TweenInfo.new(0.5, Enum.EasingStyle.Quart), {ImageTransparency = 0}):Play()
+	TweenService:Create(Loading, TweenInfo.new(0.5, Enum.EasingStyle.Quart), {BackgroundTransparency = 0.7}):Play()
+	TweenService:Create(LoadingImage, TweenInfo.new(0.5, Enum.EasingStyle.Quart), {ImageTransparency = 0}):Play()
 end
 
 function DisappearLoading()
@@ -93,12 +93,12 @@ local useNonce = true;  -- use a nonce to prevent replay attacks and request tam
 
 --! callbacks
 local onMessage = function(message) 
-  print(message)
-  if game:GetService("CoreGui"):FindFirstChild("KeyGui") then
-    game:GetService("CoreGui").KeyGui.KeyFrame.Status.Text = message
-    wait(5)
-    game:GetService("CoreGui").KeyGui.KeyFrame.Status.Text = "Do the key system to use VexHub"
-  end
+	print(message)
+	if game:GetService("CoreGui"):FindFirstChild("KeyGui") then
+		game:GetService("CoreGui").KeyGui.KeyFrame.Status.Text = message
+		wait(5)
+		game:GetService("CoreGui").KeyGui.KeyFrame.Status.Text = "Do the key system to use VexHub"
+	end
 end;
 
 --! wait for game to load
@@ -112,238 +112,238 @@ local cachedLink, cachedTime = "", 0;
 --! pick host
 local host = "https://api.platoboost.com";
 local hostResponse = fRequest({
-    Url = host .. "/public/connectivity",
-    Method = "GET"
+	Url = host .. "/public/connectivity",
+	Method = "GET"
 });
 if hostResponse.StatusCode ~= 200 or hostResponse.StatusCode ~= 429 then
-    host = "https://api.platoboost.net";
+	host = "https://api.platoboost.net";
 end
 
 --!optimize 2
 function cacheLink()
-    if cachedTime + (10*60) < fOsTime() then
-        local response = fRequest({
-            Url = host .. "/public/start",
-            Method = "POST",
-            Body = lEncode({
-                service = service,
-                identifier = lDigest(fGetHwid())
-            }),
-            Headers = {
-                ["Content-Type"] = "application/json"
-            }
-        });
+	if cachedTime + (10*60) < fOsTime() then
+		local response = fRequest({
+			Url = host .. "/public/start",
+			Method = "POST",
+			Body = lEncode({
+				service = service,
+				identifier = lDigest(fGetHwid())
+			}),
+			Headers = {
+				["Content-Type"] = "application/json"
+			}
+		});
 
-        if response.StatusCode == 200 then
-            local decoded = lDecode(response.Body);
+		if response.StatusCode == 200 then
+			local decoded = lDecode(response.Body);
 
-            if decoded.success == true then
-                cachedLink = decoded.data.url;
-                cachedTime = fOsTime();
-                return true, cachedLink;
-            else
-                onMessage(decoded.message);
-                return false, decoded.message;
-            end
-        elseif response.StatusCode == 429 then
-            local msg = "you are being rate limited, please wait 20 seconds and try again.";
-            onMessage(msg);
-            return false, msg;
-        end
+			if decoded.success == true then
+				cachedLink = decoded.data.url;
+				cachedTime = fOsTime();
+				return true, cachedLink;
+			else
+				onMessage(decoded.message);
+				return false, decoded.message;
+			end
+		elseif response.StatusCode == 429 then
+			local msg = "you are being rate limited, please wait 20 seconds and try again.";
+			onMessage(msg);
+			return false, msg;
+		end
 
-        local msg = "Failed to cache link.";
-        onMessage(msg);
-        return false, msg;
-    else
-        return true, cachedLink;
-    end
+		local msg = "Failed to cache link.";
+		onMessage(msg);
+		return false, msg;
+	else
+		return true, cachedLink;
+	end
 end
 
 cacheLink();
 
 --!optimize 2
 local generateNonce = function()
-    local str = ""
-    for _ = 1, 16 do
-        str = str .. fStringChar(fMathFloor(fMathRandom() * (122 - 97 + 1)) + 97)
-    end
-    return str
+	local str = ""
+	for _ = 1, 16 do
+		str = str .. fStringChar(fMathFloor(fMathRandom() * (122 - 97 + 1)) + 97)
+	end
+	return str
 end
 
 --!optimize 1
 for _ = 1, 5 do
-    local oNonce = generateNonce();
-    task.wait(0.2)
-    if generateNonce() == oNonce then
-        local msg = "platoboost nonce error.";
-        onMessage(msg);
-        error(msg);
-    end
+	local oNonce = generateNonce();
+	task.wait(0.2)
+	if generateNonce() == oNonce then
+		local msg = "platoboost nonce error.";
+		onMessage(msg);
+		error(msg);
+	end
 end
 
 --!optimize 2
 local copyLink = function()
-    local success, link = cacheLink();
-    
-    if success then
-        fSetClipboard(link);
-    end
+	local success, link = cacheLink();
+
+	if success then
+		fSetClipboard(link);
+	end
 end
 
 --!optimize 2
 local redeemKey = function(key)
-    local nonce = generateNonce();
-    local endpoint = host .. "/public/redeem/" .. fToString(service);
+	local nonce = generateNonce();
+	local endpoint = host .. "/public/redeem/" .. fToString(service);
 
-    local body = {
-        identifier = lDigest(fGetHwid()),
-        key = key
-    }
+	local body = {
+		identifier = lDigest(fGetHwid()),
+		key = key
+	}
 
-    if useNonce then
-        body.nonce = nonce;
-    end
+	if useNonce then
+		body.nonce = nonce;
+	end
 
-    local response = fRequest({
-        Url = endpoint,
-        Method = "POST",
-        Body = lEncode(body),
-        Headers = {
-            ["Content-Type"] = "application/json"
-        }
-    });
+	local response = fRequest({
+		Url = endpoint,
+		Method = "POST",
+		Body = lEncode(body),
+		Headers = {
+			["Content-Type"] = "application/json"
+		}
+	});
 
-    if response.StatusCode == 200 then
-        local decoded = lDecode(response.Body);
+	if response.StatusCode == 200 then
+		local decoded = lDecode(response.Body);
 
-        if decoded.success == true then
-            if decoded.data.valid == true then
-                if useNonce then
-                    if decoded.data.hash == lDigest("true" .. "-" .. nonce .. "-" .. secret) then
-                        return true;
-                    else
-                        onMessage("failed to verify integrity.");
-                        return false;
-                    end    
-                else
-                    return true;
-                end
-            else
-                onMessage("key is invalid.");
-                return false;
-            end
-        else
-            if fStringSub(decoded.message, 1, 27) == "unique constraint violation" then
-                onMessage("you already have an active key, please wait for it to expire before redeeming it.");
-                return false;
-            else
-                onMessage(decoded.message);
-                return false;
-            end
-        end
-    elseif response.StatusCode == 429 then
-        onMessage("you are being rate limited, please wait 20 seconds and try again.");
-        return false;
-    else
-        onMessage("server returned an invalid status code, please try again later.");
-        return false; 
-    end
+		if decoded.success == true then
+			if decoded.data.valid == true then
+				if useNonce then
+					if decoded.data.hash == lDigest("true" .. "-" .. nonce .. "-" .. secret) then
+						return true;
+					else
+						onMessage("failed to verify integrity.");
+						return false;
+					end    
+				else
+					return true;
+				end
+			else
+				onMessage("key is invalid.");
+				return false;
+			end
+		else
+			if fStringSub(decoded.message, 1, 27) == "unique constraint violation" then
+				onMessage("you already have an active key, please wait for it to expire before redeeming it.");
+				return false;
+			else
+				onMessage(decoded.message);
+				return false;
+			end
+		end
+	elseif response.StatusCode == 429 then
+		onMessage("you are being rate limited, please wait 20 seconds and try again.");
+		return false;
+	else
+		onMessage("server returned an invalid status code, please try again later.");
+		return false; 
+	end
 end
 
 --!optimize 2
 local verifyKey = function(key)
-    if requestSending == true then
-        onMessage("a request is already being sent, please slow down.");
-        return false;
-    else
-        requestSending = true;
-    end
+	if requestSending == true then
+		onMessage("a request is already being sent, please slow down.");
+		return false;
+	else
+		requestSending = true;
+	end
 
-    local nonce = generateNonce();
-    local endpoint = host .. "/public/whitelist/" .. fToString(service) .. "?identifier=" .. lDigest(fGetHwid()) .. "&key=" .. key;
+	local nonce = generateNonce();
+	local endpoint = host .. "/public/whitelist/" .. fToString(service) .. "?identifier=" .. lDigest(fGetHwid()) .. "&key=" .. key;
 
-    if useNonce then
-        endpoint = endpoint .. "&nonce=" .. nonce;
-    end
+	if useNonce then
+		endpoint = endpoint .. "&nonce=" .. nonce;
+	end
 
-    local response = fRequest({
-        Url = endpoint,
-        Method = "GET",
-    });
+	local response = fRequest({
+		Url = endpoint,
+		Method = "GET",
+	});
 
-    requestSending = false;
+	requestSending = false;
 
-    if response.StatusCode == 200 then
-        local decoded = lDecode(response.Body);
+	if response.StatusCode == 200 then
+		local decoded = lDecode(response.Body);
 
-        if decoded.success == true then
-            if decoded.data.valid == true then
-                if useNonce then
-                    if decoded.data.hash == lDigest("true" .. "-" .. nonce .. "-" .. secret) then
-                        return true;
-                    else
-                        onMessage("failed to verify integrity.");
-                        return false;
-                    end
-                else
-                    return true;
-                end
-            else
-                if fStringSub(key, 1, 4) == "KEY_" then
-                    return redeemKey(key);
-                else
-                    onMessage("key is invalid.");
-                    return false;
-                end
-            end
-        else
-            onMessage(decoded.message);
-            return false;
-        end
-    elseif response.StatusCode == 429 then
-        onMessage("you are being rate limited, please wait 20 seconds and try again.");
-        return false;
-    else
-        onMessage("server returned an invalid status code, please try again later.");
-        return false;
-    end
+		if decoded.success == true then
+			if decoded.data.valid == true then
+				if useNonce then
+					if decoded.data.hash == lDigest("true" .. "-" .. nonce .. "-" .. secret) then
+						return true;
+					else
+						onMessage("failed to verify integrity.");
+						return false;
+					end
+				else
+					return true;
+				end
+			else
+				if fStringSub(key, 1, 4) == "KEY_" then
+					return redeemKey(key);
+				else
+					onMessage("key is invalid.");
+					return false;
+				end
+			end
+		else
+			onMessage(decoded.message);
+			return false;
+		end
+	elseif response.StatusCode == 429 then
+		onMessage("you are being rate limited, please wait 20 seconds and try again.");
+		return false;
+	else
+		onMessage("server returned an invalid status code, please try again later.");
+		return false;
+	end
 end
 
 --!optimize 2
 local getFlag = function(name)
-    local nonce = generateNonce();
-    local endpoint = host .. "/public/flag/" .. fToString(service) .. "?name=" .. name;
+	local nonce = generateNonce();
+	local endpoint = host .. "/public/flag/" .. fToString(service) .. "?name=" .. name;
 
-    if useNonce then
-        endpoint = endpoint .. "&nonce=" .. nonce;
-    end
+	if useNonce then
+		endpoint = endpoint .. "&nonce=" .. nonce;
+	end
 
-    local response = fRequest({
-        Url = endpoint,
-        Method = "GET",
-    });
+	local response = fRequest({
+		Url = endpoint,
+		Method = "GET",
+	});
 
-    if response.StatusCode == 200 then
-        local decoded = lDecode(response.Body);
+	if response.StatusCode == 200 then
+		local decoded = lDecode(response.Body);
 
-        if decoded.success == true then
-            if useNonce then
-                if decoded.data.hash == lDigest(fToString(decoded.data.value) .. "-" .. nonce .. "-" .. secret) then
-                    return decoded.data.value;
-                else
-                    onMessage("failed to verify integrity.");
-                    return nil;
-                end
-            else
-                return decoded.data.value;
-            end
-        else
-            onMessage(decoded.message);
-            return nil;
-        end
-    else
-        return nil;
-    end
+		if decoded.success == true then
+			if useNonce then
+				if decoded.data.hash == lDigest(fToString(decoded.data.value) .. "-" .. nonce .. "-" .. secret) then
+					return decoded.data.value;
+				else
+					onMessage("failed to verify integrity.");
+					return nil;
+				end
+			else
+				return decoded.data.value;
+			end
+		else
+			onMessage(decoded.message);
+			return nil;
+		end
+	else
+		return nil;
+	end
 end
 -------------------------------------------------------------------------------
 
@@ -358,273 +358,277 @@ end
 -- use getFlag(name) to get a flag from the server, this will return nil if an error occurs, if no error occurs, the value configured in the platoboost dashboard will be returned.
 
 function StartVexHubSession()
-  loadstring(game:HttpGet("https://raw.githubusercontent.com/Sofjskdkkco/GUIGateway/refs/heads/main/Source"))()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/Sofjskdkkco/GUIGateway/refs/heads/main/Source"))()
 end
 
 function StartKeySystemSession()
-  -- V31nc : GUI to LUA V1
-  
-  -- Instances:
-  
-  local KeyGui = Instance.new("ScreenGui")
-  local KeyFrame = Instance.new("ImageLabel")
-  local UICorner = Instance.new("UICorner")
-  local VexHubImage = Instance.new("ImageLabel")
-  local KeySystemText = Instance.new("TextLabel")
-  local TextBoxParent = Instance.new("Frame")
-  local TextBox = Instance.new("TextBox")
-  local UICorner_2 = Instance.new("UICorner")
-  local UIStroke = Instance.new("UIStroke")
-  local Status = Instance.new("TextLabel")
-  local UIListLayout = Instance.new("UIListLayout")
-  local GetKey = Instance.new("TextButton")
-  local UICorner_3 = Instance.new("UICorner")
-  local UIListLayout_2 = Instance.new("UIListLayout")
-  local KeyImage = Instance.new("ImageLabel")
-  local TextLabel = Instance.new("TextLabel")
-  local Discord = Instance.new("TextButton")
-  local UICorner_4 = Instance.new("UICorner")
-  local UIListLayout_3 = Instance.new("UIListLayout")
-  local DiscordLogo = Instance.new("ImageLabel")
-  local TextLabel_2 = Instance.new("TextLabel")
-  local Unlock = Instance.new("TextButton")
-  local UICorner_5 = Instance.new("UICorner")
-  
-  --Properties:
-  
-  KeyGui.Name = "KeyGui"
-  KeyGui.Parent = game:GetService("CoreGui")
-  KeyGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-  
-  KeyFrame.Name = "KeyFrame"
-  KeyFrame.Parent = KeyGui
-  KeyFrame.Active = true
-  KeyFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-  KeyFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-  KeyFrame.BorderSizePixel = 0
-  KeyFrame.Draggable = true
-  KeyFrame.Position = UDim2.new(0.344164312, 0, 0.30216527, 0)
-  KeyFrame.Size = UDim2.new(0, 200, 0, 230)
-  KeyFrame.Image = "http://www.roblox.com/asset/?id=11926598891"
-  KeyFrame.ImageTransparency = 0.500
-  KeyFrame.ScaleType = Enum.ScaleType.Crop
-  
-  UICorner.Parent = KeyFrame
-  
-  VexHubImage.Name = "VexHubImage"
-  VexHubImage.Parent = KeyFrame
-  VexHubImage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-  VexHubImage.BackgroundTransparency = 1.000
-  VexHubImage.BorderColor3 = Color3.fromRGB(0, 0, 0)
-  VexHubImage.BorderSizePixel = 0
-  VexHubImage.LayoutOrder = 1
-  VexHubImage.Position = UDim2.new(0.25, 0, 0.434782594, 0)
-  VexHubImage.Size = UDim2.new(0, 100, 0, 54)
-  VexHubImage.Image = "rbxassetid://14803348752"
-  VexHubImage.ScaleType = Enum.ScaleType.Crop
-  
-  KeySystemText.Name = "KeySystemText"
-  KeySystemText.Parent = KeyFrame
-  KeySystemText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-  KeySystemText.BackgroundTransparency = 1.000
-  KeySystemText.BorderColor3 = Color3.fromRGB(0, 0, 0)
-  KeySystemText.BorderSizePixel = 0
-  KeySystemText.LayoutOrder = 2
-  KeySystemText.Position = UDim2.new(0, 0, 0.70869565, 0)
-  KeySystemText.Size = UDim2.new(0, 200, 0, 23)
-  KeySystemText.Font = Enum.Font.GothamBold
-  KeySystemText.Text = "Key System"
-  KeySystemText.TextColor3 = Color3.fromRGB(255, 255, 255)
-  KeySystemText.TextSize = 18.000
-  KeySystemText.TextYAlignment = Enum.TextYAlignment.Top
-  
-  TextBoxParent.Name = "TextBoxParent"
-  TextBoxParent.Parent = KeyFrame
-  TextBoxParent.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-  TextBoxParent.BackgroundTransparency = 0.900
-  TextBoxParent.BorderColor3 = Color3.fromRGB(0, 0, 0)
-  TextBoxParent.BorderSizePixel = 0
-  TextBoxParent.LayoutOrder = 3
-  TextBoxParent.Position = UDim2.new(0.0500000007, 0, 0.456521749, 0)
-  TextBoxParent.Size = UDim2.new(0, 180, 0, 20)
-  
-  TextBox.Parent = TextBoxParent
-  TextBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-  TextBox.BackgroundTransparency = 1.000
-  TextBox.BorderColor3 = Color3.fromRGB(0, 0, 0)
-  TextBox.BorderSizePixel = 0
-  TextBox.Position = UDim2.new(0.027777778, 0, 0, 0)
-  TextBox.Size = UDim2.new(0, 170, 0, 20)
-  TextBox.ClearTextOnFocus = false
-  TextBox.Font = Enum.Font.Gotham
-  TextBox.PlaceholderText = "Key Here"
-  TextBox.Text = ""
-  TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
-  TextBox.TextSize = 12.000
-  TextBox.TextWrapped = true
-  TextBox.TextXAlignment = Enum.TextXAlignment.Left
-  
-  UICorner_2.Parent = TextBoxParent
-  
-  UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-  UIStroke.Color = Color3.fromRGB(255, 255, 255)
-  UIStroke.Thickness = 0.500
-  UIStroke.Transparency = 0.700
-  UIStroke.Parent = TextBoxParent
-  
-  Status.Name = "Status"
-  Status.Parent = KeyFrame
-  Status.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-  Status.BackgroundTransparency = 1.000
-  Status.BorderColor3 = Color3.fromRGB(0, 0, 0)
-  Status.BorderSizePixel = 0
-  Status.LayoutOrder = 4
-  Status.Position = UDim2.new(0, 0, 0.541545987, 0)
-  Status.Size = UDim2.new(0, 200, 0, 10)
-  Status.Font = Enum.Font.Gotham
-  Status.Text = "Do the key system to use VexHub"
-  Status.TextColor3 = Color3.fromRGB(255, 255, 255)
-  Status.TextSize = 10.000
-  
-  UIListLayout.Parent = KeyFrame
-  UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
-  UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
-  UIListLayout.VerticalAlignment = Enum.VerticalAlignment.Center
-  UIListLayout.Padding = UDim.new(0, 5)
-  
-  GetKey.Name = "GetKey"
-  GetKey.Parent = KeyFrame
-  GetKey.BackgroundColor3 = Color3.fromRGB(255, 170, 0)
-  GetKey.BorderColor3 = Color3.fromRGB(0, 0, 0)
-  GetKey.BorderSizePixel = 0
-  GetKey.LayoutOrder = 6
-  GetKey.Position = UDim2.new(0.0500000007, 0, 0.730391264, 0)
-  GetKey.Size = UDim2.new(0, 180, 0, 20)
-  GetKey.Font = Enum.Font.GothamBold
-  GetKey.Text = ""
-  GetKey.TextColor3 = Color3.fromRGB(255, 255, 255)
-  GetKey.TextSize = 14.000
-  
-  UICorner_3.Parent = GetKey
-  
-  UIListLayout_2.Parent = GetKey
-  UIListLayout_2.FillDirection = Enum.FillDirection.Horizontal
-  UIListLayout_2.HorizontalAlignment = Enum.HorizontalAlignment.Center
-  UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
-  UIListLayout_2.VerticalAlignment = Enum.VerticalAlignment.Center
-  
-  KeyImage.Name = "KeyImage"
-  KeyImage.Parent = GetKey
-  KeyImage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-  KeyImage.BackgroundTransparency = 1.000
-  KeyImage.BorderColor3 = Color3.fromRGB(0, 0, 0)
-  KeyImage.BorderSizePixel = 0
-  KeyImage.Size = UDim2.new(0, 20, 0, 20)
-  KeyImage.Image = "rbxassetid://11947931309"
-  
-  TextLabel.Parent = GetKey
-  TextLabel.AutomaticSize = Enum.AutomaticSize.X
-  TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-  TextLabel.BackgroundTransparency = 1.000
-  TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
-  TextLabel.BorderSizePixel = 0
-  TextLabel.Size = UDim2.new(0, 0, 0, 20)
-  TextLabel.Font = Enum.Font.GothamBold
-  TextLabel.Text = " Get Key"
-  TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-  TextLabel.TextSize = 14.000
-  
-  Discord.Name = "Discord"
-  Discord.Parent = KeyFrame
-  Discord.BackgroundColor3 = Color3.fromRGB(87, 101, 242)
-  Discord.BorderColor3 = Color3.fromRGB(0, 0, 0)
-  Discord.BorderSizePixel = 0
-  Discord.LayoutOrder = 7
-  Discord.Position = UDim2.new(0.0500000007, 0, 0.730391264, 0)
-  Discord.Size = UDim2.new(0, 180, 0, 20)
-  Discord.Font = Enum.Font.GothamBold
-  Discord.Text = ""
-  Discord.TextColor3 = Color3.fromRGB(255, 255, 255)
-  Discord.TextSize = 14.000
-  
-  UICorner_4.Parent = Discord
-  
-  UIListLayout_3.Parent = Discord
-  UIListLayout_3.FillDirection = Enum.FillDirection.Horizontal
-  UIListLayout_3.HorizontalAlignment = Enum.HorizontalAlignment.Center
-  UIListLayout_3.SortOrder = Enum.SortOrder.LayoutOrder
-  UIListLayout_3.VerticalAlignment = Enum.VerticalAlignment.Center
-  
-  DiscordLogo.Name = "DiscordLogo"
-  DiscordLogo.Parent = Discord
-  DiscordLogo.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-  DiscordLogo.BackgroundTransparency = 1.000
-  DiscordLogo.BorderColor3 = Color3.fromRGB(0, 0, 0)
-  DiscordLogo.BorderSizePixel = 0
-  DiscordLogo.Size = UDim2.new(0, 20, 0, 20)
-  DiscordLogo.Image = "rbxassetid://10735070439"
-  
-  TextLabel_2.Parent = Discord
-  TextLabel_2.AutomaticSize = Enum.AutomaticSize.X
-  TextLabel_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-  TextLabel_2.BackgroundTransparency = 1.000
-  TextLabel_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
-  TextLabel_2.BorderSizePixel = 0
-  TextLabel_2.Size = UDim2.new(0, 0, 0, 20)
-  TextLabel_2.Font = Enum.Font.GothamBold
-  TextLabel_2.Text = " Discord"
-  TextLabel_2.TextColor3 = Color3.fromRGB(255, 255, 255)
-  TextLabel_2.TextSize = 14.000
-  
-  Unlock.Name = "Unlock"
-  Unlock.Parent = KeyFrame
-  Unlock.BackgroundColor3 = Color3.fromRGB(0, 186, 85)
-  Unlock.BorderColor3 = Color3.fromRGB(0, 0, 0)
-  Unlock.BorderSizePixel = 0
-  Unlock.LayoutOrder = 5
-  Unlock.Position = UDim2.new(0.0500000007, 0, 0.730391264, 0)
-  Unlock.Size = UDim2.new(0, 180, 0, 25)
-  Unlock.Font = Enum.Font.GothamBold
-  Unlock.Text = "Unlock"
-  Unlock.TextColor3 = Color3.fromRGB(255, 255, 255)
-  Unlock.TextSize = 16.000
-  
-  UICorner_5.Parent = Unlock
-  
-  Unlock.MouseButton1Down:Connect(function()
-    local String = TextBox.ContentText
-    local success = verifyKey(String)
-    
-    if success then
-      writefile(".vxhbksys", TextBox.ContentText)
-      KeyGui:Destroy()
-      StartVexHubSession()
-    else
-      print("key is invalid.")
-    end
-  end)
+	-- V31nc : GUI to LUA V1
 
-  GetKey.MouseButton1Down:Connect(function()
-    copyLink()
-  end)
+	-- Instances:
 
-  Discord.MouseButton1Down:Connect(function()
-    setclipboard("dsc.gg/vhub")
-  end)
+	local KeyGui = Instance.new("ScreenGui")
+	local KeyFrame = Instance.new("ImageLabel")
+	local UICorner = Instance.new("UICorner")
+	local VexHubImage = Instance.new("ImageLabel")
+	local KeySystemText = Instance.new("TextLabel")
+	local TextBoxParent = Instance.new("Frame")
+	local TextBox = Instance.new("TextBox")
+	local UICorner_2 = Instance.new("UICorner")
+	local UIStroke = Instance.new("UIStroke")
+	local Status = Instance.new("TextLabel")
+	local UIListLayout = Instance.new("UIListLayout")
+	local GetKey = Instance.new("TextButton")
+	local UICorner_3 = Instance.new("UICorner")
+	local UIListLayout_2 = Instance.new("UIListLayout")
+	local KeyImage = Instance.new("ImageLabel")
+	local TextLabel = Instance.new("TextLabel")
+	local Discord = Instance.new("TextButton")
+	local UICorner_4 = Instance.new("UICorner")
+	local UIListLayout_3 = Instance.new("UIListLayout")
+	local DiscordLogo = Instance.new("ImageLabel")
+	local TextLabel_2 = Instance.new("TextLabel")
+	local Unlock = Instance.new("TextButton")
+	local UICorner_5 = Instance.new("UICorner")
+
+	--Properties:
+
+	KeyGui.Name = "KeyGui"
+	KeyGui.Parent = game:GetService("CoreGui")
+	KeyGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+	KeyFrame.Name = "KeyFrame"
+	KeyFrame.Parent = KeyGui
+	KeyFrame.Active = true
+	KeyFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	KeyFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	KeyFrame.BorderSizePixel = 0
+	KeyFrame.Draggable = true
+	KeyFrame.Position = UDim2.new(0.344164312, 0, 0.30216527, 0)
+	KeyFrame.Size = UDim2.new(0, 200, 0, 230)
+	KeyFrame.Image = "http://www.roblox.com/asset/?id=11926598891"
+	KeyFrame.ImageTransparency = 0.500
+	KeyFrame.ScaleType = Enum.ScaleType.Crop
+
+	UICorner.Parent = KeyFrame
+
+	VexHubImage.Name = "VexHubImage"
+	VexHubImage.Parent = KeyFrame
+	VexHubImage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	VexHubImage.BackgroundTransparency = 1.000
+	VexHubImage.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	VexHubImage.BorderSizePixel = 0
+	VexHubImage.LayoutOrder = 1
+	VexHubImage.Position = UDim2.new(0.25, 0, 0.434782594, 0)
+	VexHubImage.Size = UDim2.new(0, 100, 0, 54)
+	VexHubImage.Image = "rbxassetid://14803348752"
+	VexHubImage.ScaleType = Enum.ScaleType.Crop
+
+	KeySystemText.Name = "KeySystemText"
+	KeySystemText.Parent = KeyFrame
+	KeySystemText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	KeySystemText.BackgroundTransparency = 1.000
+	KeySystemText.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	KeySystemText.BorderSizePixel = 0
+	KeySystemText.LayoutOrder = 2
+	KeySystemText.Position = UDim2.new(0, 0, 0.70869565, 0)
+	KeySystemText.Size = UDim2.new(0, 200, 0, 23)
+	KeySystemText.Font = Enum.Font.GothamBold
+	KeySystemText.Text = "Key System"
+	KeySystemText.TextColor3 = Color3.fromRGB(255, 255, 255)
+	KeySystemText.TextSize = 18.000
+	KeySystemText.TextYAlignment = Enum.TextYAlignment.Top
+
+	TextBoxParent.Name = "TextBoxParent"
+	TextBoxParent.Parent = KeyFrame
+	TextBoxParent.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TextBoxParent.BackgroundTransparency = 0.900
+	TextBoxParent.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	TextBoxParent.BorderSizePixel = 0
+	TextBoxParent.LayoutOrder = 3
+	TextBoxParent.Position = UDim2.new(0.0500000007, 0, 0.456521749, 0)
+	TextBoxParent.Size = UDim2.new(0, 180, 0, 20)
+
+	TextBox.Parent = TextBoxParent
+	TextBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TextBox.BackgroundTransparency = 1.000
+	TextBox.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	TextBox.BorderSizePixel = 0
+	TextBox.Position = UDim2.new(0.027777778, 0, 0, 0)
+	TextBox.Size = UDim2.new(0, 170, 0, 20)
+	TextBox.ClearTextOnFocus = false
+	TextBox.Font = Enum.Font.Gotham
+	TextBox.PlaceholderText = "Key Here"
+	TextBox.Text = ""
+	TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+	TextBox.TextSize = 12.000
+	TextBox.TextWrapped = true
+	TextBox.TextXAlignment = Enum.TextXAlignment.Left
+
+	UICorner_2.Parent = TextBoxParent
+
+	UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+	UIStroke.Color = Color3.fromRGB(255, 255, 255)
+	UIStroke.Thickness = 0.500
+	UIStroke.Transparency = 0.700
+	UIStroke.Parent = TextBoxParent
+
+	Status.Name = "Status"
+	Status.Parent = KeyFrame
+	Status.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Status.BackgroundTransparency = 1.000
+	Status.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Status.BorderSizePixel = 0
+	Status.LayoutOrder = 4
+	Status.Position = UDim2.new(0, 0, 0.541545987, 0)
+	Status.Size = UDim2.new(0, 200, 0, 10)
+	Status.Font = Enum.Font.Gotham
+	Status.Text = "Do the key system to use VexHub"
+	Status.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Status.TextSize = 10.000
+
+	UIListLayout.Parent = KeyFrame
+	UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+	UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+	UIListLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+	UIListLayout.Padding = UDim.new(0, 5)
+
+	GetKey.Name = "GetKey"
+	GetKey.Parent = KeyFrame
+	GetKey.BackgroundColor3 = Color3.fromRGB(255, 170, 0)
+	GetKey.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	GetKey.BorderSizePixel = 0
+	GetKey.LayoutOrder = 6
+	GetKey.Position = UDim2.new(0.0500000007, 0, 0.730391264, 0)
+	GetKey.Size = UDim2.new(0, 180, 0, 20)
+	GetKey.Font = Enum.Font.GothamBold
+	GetKey.Text = ""
+	GetKey.TextColor3 = Color3.fromRGB(255, 255, 255)
+	GetKey.TextSize = 14.000
+
+	UICorner_3.Parent = GetKey
+
+	UIListLayout_2.Parent = GetKey
+	UIListLayout_2.FillDirection = Enum.FillDirection.Horizontal
+	UIListLayout_2.HorizontalAlignment = Enum.HorizontalAlignment.Center
+	UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
+	UIListLayout_2.VerticalAlignment = Enum.VerticalAlignment.Center
+
+	KeyImage.Name = "KeyImage"
+	KeyImage.Parent = GetKey
+	KeyImage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	KeyImage.BackgroundTransparency = 1.000
+	KeyImage.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	KeyImage.BorderSizePixel = 0
+	KeyImage.Size = UDim2.new(0, 20, 0, 20)
+	KeyImage.Image = "rbxassetid://11947931309"
+
+	TextLabel.Parent = GetKey
+	TextLabel.AutomaticSize = Enum.AutomaticSize.X
+	TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TextLabel.BackgroundTransparency = 1.000
+	TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	TextLabel.BorderSizePixel = 0
+	TextLabel.Size = UDim2.new(0, 0, 0, 20)
+	TextLabel.Font = Enum.Font.GothamBold
+	TextLabel.Text = " Get Key"
+	TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+	TextLabel.TextSize = 14.000
+
+	Discord.Name = "Discord"
+	Discord.Parent = KeyFrame
+	Discord.BackgroundColor3 = Color3.fromRGB(87, 101, 242)
+	Discord.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Discord.BorderSizePixel = 0
+	Discord.LayoutOrder = 7
+	Discord.Position = UDim2.new(0.0500000007, 0, 0.730391264, 0)
+	Discord.Size = UDim2.new(0, 180, 0, 20)
+	Discord.Font = Enum.Font.GothamBold
+	Discord.Text = ""
+	Discord.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Discord.TextSize = 14.000
+
+	UICorner_4.Parent = Discord
+
+	UIListLayout_3.Parent = Discord
+	UIListLayout_3.FillDirection = Enum.FillDirection.Horizontal
+	UIListLayout_3.HorizontalAlignment = Enum.HorizontalAlignment.Center
+	UIListLayout_3.SortOrder = Enum.SortOrder.LayoutOrder
+	UIListLayout_3.VerticalAlignment = Enum.VerticalAlignment.Center
+
+	DiscordLogo.Name = "DiscordLogo"
+	DiscordLogo.Parent = Discord
+	DiscordLogo.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	DiscordLogo.BackgroundTransparency = 1.000
+	DiscordLogo.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	DiscordLogo.BorderSizePixel = 0
+	DiscordLogo.Size = UDim2.new(0, 20, 0, 20)
+	DiscordLogo.Image = "rbxassetid://10735070439"
+
+	TextLabel_2.Parent = Discord
+	TextLabel_2.AutomaticSize = Enum.AutomaticSize.X
+	TextLabel_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TextLabel_2.BackgroundTransparency = 1.000
+	TextLabel_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	TextLabel_2.BorderSizePixel = 0
+	TextLabel_2.Size = UDim2.new(0, 0, 0, 20)
+	TextLabel_2.Font = Enum.Font.GothamBold
+	TextLabel_2.Text = " Discord"
+	TextLabel_2.TextColor3 = Color3.fromRGB(255, 255, 255)
+	TextLabel_2.TextSize = 14.000
+
+	Unlock.Name = "Unlock"
+	Unlock.Parent = KeyFrame
+	Unlock.BackgroundColor3 = Color3.fromRGB(0, 186, 85)
+	Unlock.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Unlock.BorderSizePixel = 0
+	Unlock.LayoutOrder = 5
+	Unlock.Position = UDim2.new(0.0500000007, 0, 0.730391264, 0)
+	Unlock.Size = UDim2.new(0, 180, 0, 25)
+	Unlock.Font = Enum.Font.GothamBold
+	Unlock.Text = "Unlock"
+	Unlock.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Unlock.TextSize = 16.000
+
+	UICorner_5.Parent = Unlock
+
+	Unlock.MouseButton1Down:Connect(function()
+		local String = TextBox.ContentText
+		local success = verifyKey(String)
+
+		if success then
+			writefile(".vxhbksys", TextBox.ContentText)
+			KeyGui:Destroy()
+			StartVexHubSession()
+		else
+			print("key is invalid.")
+		end
+	end)
+
+	GetKey.MouseButton1Down:Connect(function()
+		copyLink()
+	end)
+
+	Discord.MouseButton1Down:Connect(function()
+		setclipboard("dsc.gg/vhub")
+	end)
 end
 
 if isfile(".vxhbksys") then
-  local String = readfile(".vxhbksys")
-  local success = verifyKey(String)
-    
-  if success then
-    DisappearLoading()
-    StartVexHubSession()
-  else
-    DisappearLoading()
-    StartKeySystemSession()
-  end
+	local String = readfile(".vxhbksys")
+	local success = verifyKey(String)
+
+	if success then
+		DisappearLoading()
+		StartVexHubSession()
+	else
+		DisappearLoading()
+		if game:GetService("CoreGui"):FindFirstChild("KeyGui") == nil then
+			StartKeySystemSession()
+		end
+	end
 else
-  DisappearLoading()
-  StartKeySystemSession()
+	DisappearLoading()
+	if game:GetService("CoreGui"):FindFirstChild("KeyGui") == nil then
+		StartKeySystemSession()
+	end
 end
