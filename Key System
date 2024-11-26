@@ -70,12 +70,6 @@ end
 
 AppearLoading()
 
-if VexHubKeySystemLoaded then
-	DisappearLoading()
-end
-
-pcall(function() getgenv().VexHubKeySystemLoaded = true end)
-
 -------------------------------------------------------------------------------
 --! json library
 --! cryptography library
