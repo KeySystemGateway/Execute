@@ -48,7 +48,11 @@ LoadingImage.ImageTransparency = 1.000
 
 coroutine.wrap(function()
 	while task.wait(0.001) do
-		LoadingImage.Rotation += 3
+		if (ScreenGui) then
+			LoadingImage.Rotation += 3
+		else
+			return
+		end
 	end
 end)()
 
@@ -58,11 +62,18 @@ function AppearLoading()
 end
 
 function DisappearLoading()
-  TweenService:Create(Loading, TweenInfo.new(0.5, Enum.EasingStyle.Quart), {BackgroundTransparency = 1}):Play()
-  TweenService:Create(LoadingImage, TweenInfo.new(0.5, Enum.EasingStyle.Quart), {ImageTransparency = 1}):Play()
+	TweenService:Create(Loading, TweenInfo.new(0.5, Enum.EasingStyle.Quart), {BackgroundTransparency = 1}):Play()
+	TweenService:Create(LoadingImage, TweenInfo.new(0.5, Enum.EasingStyle.Quart), {ImageTransparency = 1}):Play()
+	ScreenGui:Destroy()
 end
 
 AppearLoading()
+
+if VexHubKeySystemLoaded then
+	DisappearLoading()
+end
+
+pcall(function() getgenv().VexHubKeySystemLoaded = true end)
 
 -------------------------------------------------------------------------------
 --! json library
