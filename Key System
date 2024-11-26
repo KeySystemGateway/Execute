@@ -56,12 +56,12 @@ coroutine.wrap(function()
 	end
 end)()
 
-getgenv.AppearLoading = function()
+function AppearLoading()
 	TweenService:Create(Loading, TweenInfo.new(0.5, Enum.EasingStyle.Quart), {BackgroundTransparency = 0.7}):Play()
 	TweenService:Create(LoadingImage, TweenInfo.new(0.5, Enum.EasingStyle.Quart), {ImageTransparency = 0}):Play()
 end
 
-getgenv.DisappearLoading = function()
+function DisappearLoading()
 	TweenService:Create(Loading, TweenInfo.new(0.5, Enum.EasingStyle.Quart), {BackgroundTransparency = 1}):Play()
 	TweenService:Create(LoadingImage, TweenInfo.new(0.5, Enum.EasingStyle.Quart), {ImageTransparency = 1}):Play()
 end
