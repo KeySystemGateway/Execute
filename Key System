@@ -610,9 +610,9 @@ if isfile(".vxhbksys") then
 	local success = verifyKey(String)
 
 	if success then
-    coroutine.wrap(function()
-		  StartVexHubSession()
-    end)()
+		coroutine.wrap(function()
+			StartVexHubSession()
+		end)()
 
 		DisappearLoading()
 	else
