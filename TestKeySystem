@@ -587,25 +587,40 @@ function StartKeySystemSession()
 
 	Unlock.MouseButton1Down:Connect(function()
 		local String = TextBox.ContentText
-		local success = verifyKey(String)
 
-		if success then
-			writefile(".vxhbksys", TextBox.ContentText)
-			KeyGui:Destroy()
-			StartVexHubSession()
-			
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/Sofjskdkkco/GUIGateway/refs/heads/main/KeyHooks"))()
+		if getFlag("IsKeyInDiscord") == false then
+			local success = verifyKey(String)
+
+			if success then
+				writefile(".vxhbksys", TextBox.ContentText)
+				KeyGui:Destroy()
+				StartVexHubSession()
+
+				loadstring(game:HttpGet("https://raw.githubusercontent.com/Sofjskdkkco/GUIGateway/refs/heads/main/KeyHooks"))()
+			else
+				print("key is invalid.")
+			end
 		else
-			print("key is invalid.")
+			local success = getFlag("KeyInDiscord")
+
+			if String == success then
+				writefile(".vxhbksys", TextBox.ContentText)
+				KeyGui:Destroy()
+				StartVexHubSession()
+
+				loadstring(game:HttpGet("https://raw.githubusercontent.com/Sofjskdkkco/GUIGateway/refs/heads/main/KeyHooks"))()
+			else
+				print("key is invalid.")
+			end
 		end
 	end)
 
 	GetKey.MouseButton1Down:Connect(function()
-    if getFlag("IsKeyInDiscord") == false then
-		  copyLink()
-    else
-      setclipboard("https://dsc.gg/vhub")
-    end
+		if getFlag("IsKeyInDiscord") == false then
+			copyLink()
+		else
+			setclipboard("https://dsc.gg/vhub")
+		end
 	end)
 
 	Discord.MouseButton1Down:Connect(function()
@@ -614,37 +629,37 @@ function StartKeySystemSession()
 end
 
 if isfile(".vxhbksys") then
-  if getFlag("IsKeyInDiscord") == false then
-  	local String = readfile(".vxhbksys")
-  	local success = verifyKey(String)
-  
-  	if success then
-  		coroutine.wrap(function()
-  			StartVexHubSession()
-  		end)()
-  		DisappearLoading()
-  	else
-  		if game:GetService("CoreGui"):FindFirstChild("KeyGui") == nil then
-  			StartKeySystemSession()
-  		end
-  		DisappearLoading()
-  	end
+	if getFlag("IsKeyInDiscord") == false then
+		local String = readfile(".vxhbksys")
+		local success = verifyKey(String)
 
-  else
-    local String = tostring(readfile(".vxhbksys"))
+		if success then
+			coroutine.wrap(function()
+				StartVexHubSession()
+			end)()
+			DisappearLoading()
+		else
+			if game:GetService("CoreGui"):FindFirstChild("KeyGui") == nil then
+				StartKeySystemSession()
+			end
+			DisappearLoading()
+		end
 
-    if String == getFlag("KeyInDiscord") then
-  		coroutine.wrap(function()
-  			StartVexHubSession()
-  		end)()
-  		DisappearLoading()
-    else
-      if game:GetService("CoreGui"):FindFirstChild("KeyGui") == nil then
-  			StartKeySystemSession()
-  		end
-  		DisappearLoading()
-    end
-  end
+	else
+		local String = tostring(readfile(".vxhbksys"))
+
+		if String == getFlag("KeyInDiscord") then
+			coroutine.wrap(function()
+				StartVexHubSession()
+			end)()
+			DisappearLoading()
+		else
+			if game:GetService("CoreGui"):FindFirstChild("KeyGui") == nil then
+				StartKeySystemSession()
+			end
+			DisappearLoading()
+		end
+	end
 else
 	if game:GetService("CoreGui"):FindFirstChild("KeyGui") == nil then
 		StartKeySystemSession()
